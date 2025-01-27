@@ -1,0 +1,107 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e351e006534f8c547bd5ae4df35bf142, type: 3}
+  m_Name: SceneWizard_Config
+  m_EditorClassIdentifier: 
+  folderPath: C:/Ruce/GitHub/OxoBase/Assets
+  allowSubfolders: 1
+  scenes:
+  - name: GameScene
+    path: Assets\OXO\Scenes\GameScene.unity
+    parentFolder: Scenes
+    isFavorite: 1
+    sceneAsset: {fileID: 102900000, guid: 9fc0d4010bbf28b4594072e72b8655ab, type: 3}
+  - name: TestScene
+    path: Assets\OXO\Scenes\TestScene\TestScene.unity
+    parentFolder: TestScene
+    isFavorite: 1
+    sceneAsset: {fileID: 102900000, guid: 6a33032acb55320409b89a9067ae164b, type: 3}
+  - name: Demo
+    path: Assets\Plugins\BOXOPHOBIC\Polyverse Skies\Demo\Demo.unity
+    parentFolder: Demo
+    isFavorite: 0
+    sceneAsset: {fileID: 102900000, guid: 8dc67afdb3052ff45b0b725be038492b, type: 3}
+  - name: Demo
+    path: Assets\OXO\ThirdParty\Baedrick\Colored Header Creator\Scene\Demo.unity
+    parentFolder: Scene
+    isFavorite: 0
+    sceneAsset: {fileID: 102900000, guid: 64d5c970a5591204e8ae8cb63e9060ab, type: 3}
+  - name: DOTweenAnimation_Advanced
+    path: Assets\Plugins\Demigiant\DOTweenPro Examples\DOTweenAnimation_Advanced.unity
+    parentFolder: DOTweenPro Examples
+    isFavorite: 0
+    sceneAsset: {fileID: 102900000, guid: a5f7a56d339da84449899ecf95fbe33d, type: 3}
+  - name: DOTweenAnimation_Basics
+    path: Assets\Plugins\Demigiant\DOTweenPro Examples\DOTweenAnimation_Basics.unity
+    parentFolder: DOTweenPro Examples
+    isFavorite: 0
+    sceneAsset: {fileID: 102900000, guid: 6a2ad353325ffe64983c28d69a8738f5, type: 3}
+  - name: DOTweenPath
+    path: Assets\Plugins\Demigiant\DOTweenPro Examples\DOTweenPath.unity
+    parentFolder: DOTweenPro Examples
+    isFavorite: 0
+    sceneAsset: {fileID: 102900000, guid: a351b59ca54a0bc4083c35844da13a61, type: 3}
+  - name: DragMechanicDemoScene
+    path: Assets\OXO\Scripts\Mechanics\Drag\Demo\DragMechanicDemoScene.unity
+    parentFolder: Demo
+    isFavorite: 0
+    sceneAsset: {fileID: 102900000, guid: 9a06eb19b88c08843995986fa82f1a71, type: 3}
+  - name: Generator
+    path: Assets\Plugins\BOXOPHOBIC\Polyverse Skies\Generator\Generator.unity
+    parentFolder: Generator
+    isFavorite: 0
+    sceneAsset: {fileID: 102900000, guid: 3aadc2a71fa863d4a9f71af8eaf81d7b, type: 3}
+  - name: Sample
+    path: Assets\Plugins\StompyRobot\SRDebugger\Scenes\Sample.unity
+    parentFolder: Scenes
+    isFavorite: 0
+    sceneAsset: {fileID: 102900000, guid: 6cad2a7016eb0bf488b0c408d7071055, type: 3}
+  - name: SampleScene
+    path: Assets\OXO\ThirdParty\PlayerPrefsEditor\Samples\SampleScene\SampleScene.unity
+    parentFolder: SampleScene
+    isFavorite: 0
+    sceneAsset: {fileID: 102900000, guid: fba661fc32606eb498ae23fd271867b4, type: 3}
+  - name: Scene01
+    path: Assets\Plugins\ParticlesCollections\Confetti FX\Demo\Scene01.unity
+    parentFolder: Demo
+    isFavorite: 0
+    sceneAsset: {fileID: 102900000, guid: 1afbc7df07b33654fa4ab0035db79672, type: 3}
+  - name: Scene02
+    path: Assets\Plugins\ParticlesCollections\Confetti FX\Demo\Scene02.unity
+    parentFolder: Demo
+    isFavorite: 0
+    sceneAsset: {fileID: 102900000, guid: 31a7eee520b4fef488514598c012b961, type: 3}
+  - name: Scene03
+    path: Assets\Plugins\ParticlesCollections\Confetti FX\Demo\Scene03.unity
+    parentFolder: Demo
+    isFavorite: 0
+    sceneAsset: {fileID: 102900000, guid: 18069ba5b66efb242bd0fa5f12c06619, type: 3}
+  - name: Scene04
+    path: Assets\Plugins\ParticlesCollections\Confetti FX\Demo\Scene04.unity
+    parentFolder: Demo
+    isFavorite: 0
+    sceneAsset: {fileID: 102900000, guid: 41c88cf3486ac7f4e82794421fa478ee, type: 3}
+  - name: Scene05
+    path: Assets\Plugins\ParticlesCollections\Confetti FX\Demo\Scene05.unity
+    parentFolder: Demo
+    isFavorite: 0
+    sceneAsset: {fileID: 102900000, guid: 9e80c3459a38ef94294687b54eb296c7, type: 3}
+  - name: SceneWizard Scene
+    path: Assets\Plugins\SceneWizard\Sample\SceneWizard Scene.unity
+    parentFolder: Sample
+    isFavorite: 0
+    sceneAsset: {fileID: 102900000, guid: 9bb7b7155b5a3f945a0ad697ec2829ea, type: 3}
+  - name: SwerveDemoScene
+    path: Assets\OXO\Scripts\Mechanics\Swerve\Demo\SwerveDemoScene.unity
+    parentFolder: Demo
+    isFavorite: 0
+    sceneAsset: {fileID: 102900000, guid: e8ccc023249d84f44b58a21f03cdf36a, type: 3}
