@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 5504324972433898547}
   - component: {fileID: 1484354338001936841}
   - component: {fileID: 4254835638362152782}
-  - component: {fileID: 5164029751696260415}
   m_Layer: 9
   m_Name: ProductStand
   m_TagString: Untagged
@@ -123,24 +122,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 296653ee802ed3b448ffead9f426de97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  capacity: 3
---- !u!114 &5164029751696260415
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1954826777540362267}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d2045566e3c86949a7958c0ba36f354, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   waitPoints:
   - {fileID: 8261583708799708950}
   - {fileID: 7788327995335677538}
   - {fileID: 8874820011835510414}
   - {fileID: 39264846599031317}
+  capacity: 3
 --- !u!1 &2363287687289060170
 GameObject:
   m_ObjectHideFlags: 0

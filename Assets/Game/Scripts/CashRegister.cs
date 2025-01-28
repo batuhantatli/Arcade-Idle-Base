@@ -8,21 +8,29 @@ using UnityEngine;
 
 public class CashRegister : MonoBehaviour
 {
+    private CashRegisterMoneyArea _moneyArea;
     private List<Customer> _customers = new List<Customer>();
     public Transform productPos;
+    public Customer firsCustomer;
 
-
-    public IEnumerator Sale()
+    private void Awake()
     {
-        Customer customer = _customers.First();
+        _moneyArea = GetComponent<CashRegisterMoneyArea>();
+    }
+
+    public async Task Sale()
+    {
+        // Customer customer = _customers.First();
         Debug.Log("Customer paying");
 
-         yield return customer.stackedProduct.transform.DOJump(productPos.position, 1f, 1, 1f).SetLoops(2, LoopType.Yoyo).WaitForCompletion();
+        await firsCustomer.stackedProduct.transform.DOJump(productPos.position, 1f, 1, 1f).SetLoops(2, LoopType.Yoyo).AsyncWaitForCompletion();
 
         Debug.Log("Customer paid product");
-        _customers.Remove(customer);
-        
-        customer.MoveExit();
+        _customers.Remove(firsCustomer);
+
+        firsCustomer.MoveExit();
+        _moneyArea.SpawnMoney();
+
         OnPaid();
     }
 
@@ -31,34 +39,28 @@ public class CashRegister : MonoBehaviour
         customer.MovePosition(
             SetCustomerPos(customer), (() =>
             {
-                if ( _customers.Count>0 &&_customers.First() == customer)
+                if (_customers.Count > 0 &&_customers.First() == customer && !customer.isPaying )
                 {
-                    StartCoroutine(Sale());
+                    customer.isPaying = true;
+                    firsCustomer = customer;
+                    _ = Sale();
                 }
             }));
     }
 
-    public Vector3 SetCustomerPos(Customer customer)
-    {
-        return new Vector3(transform.position.x, transform.position.y, transform.position.z + (_customers.IndexOf(customer) +1));
-    }
-
     public void OnPaid()
     {
-        for (var i = 0; i < _customers.Count; i++)
+        foreach (var t in _customers)
         {
-            var customer = _customers[i];
-            customer.MovePosition(
-                SetCustomerPos(customer), (() =>
-                {
-                    if (_customers.Count > 0 && _customers.First() == customer)
-                    {
-                        StartCoroutine(Sale());
-                    }
-                }));
+            MoveCustomerNewCashRegisterPos(t);
         }
     }
 
+    public Vector3 SetCustomerPos(Customer customer)
+    {
+        return new Vector3(transform.position.x, transform.position.y,
+            transform.position.z + (_customers.IndexOf(customer) + 1));
+    }
 
     public void NewCustomer(Customer customer)
     {

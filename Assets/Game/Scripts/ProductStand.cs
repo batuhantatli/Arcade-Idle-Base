@@ -1,16 +1,31 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Serialization;
 
 public class ProductStand : MonoBehaviour
 {
-    public int capacity;
+    [Serializable]
+    public class CustomerTarget
+    {
+        public ProductStand selectedStand;
+        public Transform moveTarget;
+        public bool isEmpty = true;
+    }
     
     private Stack<Product> _stackedProducts = new Stack<Product>();
+    private List<CustomerTarget> _customerTargets = new List<CustomerTarget>();
     
-    // Yığına veri ekleme
+    [SerializeField] private List<Transform> waitPoints = new List<Transform>();
+    [SerializeField] private int capacity;
+    
+    private void Start()
+    {
+        SetCustomerWaitPoints();
+    }
+    
     public void PushToStack(Product product)
     {
         MoveProductToPosition(product , () =>
@@ -19,8 +34,7 @@ public class ProductStand : MonoBehaviour
         });
     }
 
-    // Yığından veri çıkarma
-    public Product PopFromStack()
+    private Product PopFromStack()
     {
         if (_stackedProducts.Count > 0)
         {
@@ -58,7 +72,38 @@ public class ProductStand : MonoBehaviour
     {
         return _stackedProducts.Count > 0;
     }
-    
+
+
+
+    public void SetCustomerWaitPoints()
+    {
+        for (int i = 0; i < waitPoints.Count; i++)
+        {
+            CustomerTarget point = new CustomerTarget
+            {
+                selectedStand = this,
+                moveTarget = waitPoints[i]
+                
+            };
+            _customerTargets.Add(point);
+        }
+    }
+
+    public CustomerTarget GetRandomEmptyPoint()
+    {
+        var customerWaitPoint = _customerTargets.FirstOrDefault(t => t.isEmpty);
+        if (customerWaitPoint != null)
+        {
+            return customerWaitPoint;
+        }
+
+        return null;
+    }
+
+    public int GetEmptyWaitCount()
+    {
+        return _customerTargets.Count(t=> t.isEmpty);
+    }
     
     
     

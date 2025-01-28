@@ -3,31 +3,51 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using Sirenix.OdinInspector;
-using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 public class Customer : MonoBehaviour
 {
-    public CashRegister _cashRegister;
-    private StandOrderProcessor.CustomerTarget _customerTarget;
     private NavMeshAgent _navMeshAgent;
-    private Transform _startPoint;
-    public Transform _productStackPoint;
-    public Product stackedProduct;
+    private CashRegister _cashRegister;
     private CustomerManager _customerManager;
+    
+    private ProductStand.CustomerTarget _customerTarget;
+    public Product stackedProduct;
+    private Transform _startPoint;
+
+    public bool isPaying;
+    
+    
+    [SerializeField] private Transform productStackPoint;
+
     private void Awake()
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
     }
 
-    public void SetCashRegister(CashRegister cashRegister)
+    private void OnDisable()
     {
-        _cashRegister = cashRegister;
-    }    
-    public void SetCustomerManager(CustomerManager customerManager)
+        isPaying = false;
+        var product = stackedProduct;
+        if (product != null)
+        {
+            stackedProduct = null;
+        }
+    }
+
+    public void Initialize(CustomerManager customerManager, CashRegister cashRegister,
+        ProductStand.CustomerTarget customerTarget, Transform startPoint)
     {
-        _customerManager = customerManager ;
+        _customerManager = customerManager ?? throw new ArgumentNullException(nameof(customerManager));
+        _cashRegister = cashRegister ?? throw new ArgumentNullException(nameof(cashRegister));
+
+        _startPoint = startPoint;
+
+        transform.position = _startPoint.position;
+
+        SetStandPoint(customerTarget);
     }
 
     private void Start()
@@ -35,26 +55,18 @@ public class Customer : MonoBehaviour
         _navMeshAgent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
     }
 
-    public void SetWaitPoint(StandOrderProcessor.CustomerTarget customerTarget)
+
+    public void SetStandPoint(ProductStand.CustomerTarget customerTarget)
     {
         _customerTarget = customerTarget;
         _customerTarget.isEmpty = false;
         MoveStand();
     }
 
-    public void SetStartPoint(Transform transform)
-    {
-        _startPoint = transform;
-    }
-
     public void MoveStand()
     {
         Debug.Log("Customer moving stand");
-        MovePosition(_customerTarget.moveTarget.position,(() =>
-        {
-            StartCoroutine(ProductProcess());
-        } ));
-
+        MovePosition(_customerTarget.moveTarget.position, (() => { StartCoroutine(ProductProcess()); }));
     }
 
     public IEnumerator ProductProcess()
@@ -65,7 +77,7 @@ public class Customer : MonoBehaviour
             {
                 Product product = _customerTarget.selectedStand.TakeItem();
                 Debug.Log("Customer taking product");
-                product.Jump(_productStackPoint,Vector3.zero, ((() =>
+                product.Jump(productStackPoint, Vector3.zero, ((() =>
                 {
                     _customerTarget.isEmpty = true;
                     MoveCashRegister();
@@ -74,6 +86,7 @@ public class Customer : MonoBehaviour
 
                 yield break;
             }
+
             Debug.Log("Customer waiting product");
             yield return new WaitForSeconds(.2f);
         }
@@ -83,10 +96,7 @@ public class Customer : MonoBehaviour
     {
         Debug.Log("Customer moving cash register");
         _cashRegister.NewCustomer(this);
-        MovePosition(_cashRegister.SetCustomerPos(this) , () =>
-        {
-            _cashRegister.MoveCustomerNewCashRegisterPos(this);
-        });
+        MovePosition(_cashRegister.SetCustomerPos(this), () => { _cashRegister.MoveCustomerNewCashRegisterPos(this); });
     }
 
     [Button]
@@ -95,21 +105,17 @@ public class Customer : MonoBehaviour
         Debug.Log("Customer moving exit.");
         MovePosition(_startPoint.position, (() =>
         {
-            Debug.Log("Exited");
-            _customerManager.OnCustomerTaskDone?.Invoke();
-            gameObject.SetActive(false);
+            Debug.Log("Customer Exited");
+            _customerManager.OnCustomerTaskDone?.Invoke(this);
         }));
     }
-    
+
     public void MovePosition(Vector3 moveTarget, Action onCompleteMove = null)
     {
         _navMeshAgent.SetDestination(moveTarget);
-        StartCoroutine(CheckIfReachedDestination((() =>
-        {
-            onCompleteMove?.Invoke();
-        })));
+        StartCoroutine(CheckIfReachedDestination((() => { onCompleteMove?.Invoke(); })));
     }
-    
+
     private IEnumerator CheckIfReachedDestination(Action onComplateMove)
     {
         while (true)
@@ -117,15 +123,15 @@ public class Customer : MonoBehaviour
             if (HasReachedDestination())
             {
                 onComplateMove?.Invoke();
-                yield break; // Coroutine sonlandır
+                yield break; 
             }
 
             yield return null;
         }
     }
+
     public bool HasReachedDestination()
     {
-        // Hedefe ulaşılıp ulaşılmadığını kontrol et
         if (!_navMeshAgent.pathPending && _navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance)
         {
             if (!_navMeshAgent.hasPath || _navMeshAgent.velocity.sqrMagnitude == 0f)
@@ -133,6 +139,7 @@ public class Customer : MonoBehaviour
                 return true;
             }
         }
+
         return false;
     }
 }

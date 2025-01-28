@@ -6,12 +6,12 @@ using UnityEngine;
 
 public class ProductStandManager : Singleton<ProductStandManager>
 {
-    public List<StandOrderProcessor> standList = new List<StandOrderProcessor>();
+    public List<ProductStand> standList = new List<ProductStand>();
 
-    public StandOrderProcessor.CustomerTarget GetEmptyProductStand()
+    public ProductStand.CustomerTarget GetEmptyProductStand()
     {
-        var g = standList.OrderByDescending(t => t.GetEmptyWaitCount()).ToList();
-        return g.First().GetRandomEmptyPoint();
+        var productStands = standList.OrderByDescending(t => t.GetEmptyWaitCount()).ToList();
+        return productStands.First().GetRandomEmptyPoint();
     }
 
     public int EmptyProductStandCount()

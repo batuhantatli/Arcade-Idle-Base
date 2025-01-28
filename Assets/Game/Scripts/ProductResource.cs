@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
@@ -9,6 +10,12 @@ public class ProductResource : MonoBehaviour
     private Stack<int> _availableIndices;  // Changed from Queue to Stack
     private List<Product> _spawnedObjects; 
     private Dictionary<int, Coroutine> _respawnCoroutines;
+    private ObjectPool _objectPool;
+
+    private void Awake()
+    {
+        _objectPool = ObjectPool.Instance;
+    }
 
     public void InitializeResource()
     {
@@ -30,23 +37,23 @@ public class ProductResource : MonoBehaviour
             Debug.LogError("Prefab is not assigned in StandSO!");
             return;
         }
-
         // Obje oluştur ve listeye ekle
-        Product newObj = Instantiate(
-            ResourceData.productPrefab,
-            transform.position + Vector3.right * (index + 1),
-            Quaternion.identity,
-            transform
-        );
+        Product product = _objectPool.productPool.Get();
+        product.transform.position = SetProductSpawnPoint(index);
 
         if (index < _spawnedObjects.Count)
         {
-            _spawnedObjects[index] = newObj;
+            _spawnedObjects[index] = product;
         }
         else
         {
-            _spawnedObjects.Add(newObj);
+            _spawnedObjects.Add(product);
         }
+    }
+
+    public Vector3 SetProductSpawnPoint(int index)
+    {
+        return transform.position + Vector3.right * (index+1);
     }
 
     [Button]

@@ -33,10 +33,10 @@ public class StackController : MonoBehaviour
             || other.TryGetComponent(out ProductStand stand))
             && _stackCoroutine != null)
         {
+            Debug.Log("stopped");
             StopCoroutine(_stackCoroutine);
             _stackCoroutine = null;
         }
-
     }
 
     public Vector3 GetProductMovePoint()

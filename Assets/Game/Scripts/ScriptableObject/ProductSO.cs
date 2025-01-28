@@ -10,4 +10,5 @@ public class ProductSO : ScriptableObject
     public string productID;
     public Image image;
     public Product prefab;
+    
 }

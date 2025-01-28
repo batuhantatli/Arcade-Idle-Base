@@ -44,5 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9d4c2797f615a9408f303ae4ab6fe65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resources: []
-  standList: []
+  resources:
+  - resource: {fileID: 0}
+    ProductSo: {fileID: 11400000, guid: cae3686d2688358498943c730eb47d27, type: 2}
+    capacity: 4
+    respawnTime: 2

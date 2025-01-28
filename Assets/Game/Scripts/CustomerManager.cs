@@ -1,36 +1,45 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Sirenix.OdinInspector;
 using UnityEditor.VersionControl;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Task = System.Threading.Tasks.Task;
 
 public class CustomerManager : MonoBehaviour
 {
-    public float customerSpawnRate;
-    public float customerWaitRateForFull;
+    private ObjectPool _objectPool;
     private ProductStandManager _productStandManager;
-    public CashRegister c;
-    public Action OnCustomerTaskDone;
+    private MoneyControlManager _moneyControlManager;
+    private int _currentActiveCustomerCount;
+
     [SerializeField] private Customer customerPrefab;
     [SerializeField] private Transform customerSpawnPoint;
+    [SerializeField] private float customerWaitRateForFull;
+    [SerializeField] private float customerSpawnRate;
     [SerializeField] private int maxCustomerCount;
-    public int currentActiveCustomerCount;
+    
+    public  Action<Customer> OnCustomerTaskDone;
+    
+    public CashRegister selectedCashRegister;
     
     private void Awake()
     {
         _productStandManager = ProductStandManager.Instance;
+        _objectPool = ObjectPool.Instance;
+        _moneyControlManager = MoneyControlManager.Instance;
     }
 
     private void OnEnable()
     {
-        OnCustomerTaskDone += DestroyCustomer;
+        OnCustomerTaskDone += CustomerExit;
     }
 
     private void OnDisable()
     {
-        OnCustomerTaskDone -= DestroyCustomer;
+        OnCustomerTaskDone -= CustomerExit;
     }
 
     private void Start()
@@ -40,12 +49,10 @@ public class CustomerManager : MonoBehaviour
 
     public void SpawnCustomer()
     {
-        Customer customer = Instantiate(customerPrefab, customerSpawnPoint.position, Quaternion.identity);
-        customer.SetStartPoint(customerSpawnPoint);
-        customer.SetWaitPoint(_productStandManager.GetEmptyProductStand());
-        customer.SetCustomerManager(this);
-        currentActiveCustomerCount++;
-        customer._cashRegister = c;
+        Customer customer = ObjectPool.Instance.customerPool.Get();
+        customer.Initialize(this  , selectedCashRegister , _productStandManager.GetEmptyProductStand() , customerSpawnPoint);
+        
+        _currentActiveCustomerCount++;
     }
 
     public IEnumerator SpawnCustomerLoop()
@@ -65,12 +72,15 @@ public class CustomerManager : MonoBehaviour
 
     public bool CustomerSpawnController()
     {
-        return _productStandManager.EmptyProductStandCount() > 0 && maxCustomerCount > currentActiveCustomerCount;
+        return _productStandManager.EmptyProductStandCount() > 0 && maxCustomerCount > _currentActiveCustomerCount;
     }
+    
 
-    public void DestroyCustomer()
+    public void CustomerExit(Customer customer)
     {
-        currentActiveCustomerCount--;
+        _currentActiveCustomerCount--;
+        _objectPool.productPool.Relase(customer.stackedProduct.gameObject);
+        _objectPool.customerPool.Relase(customer.gameObject);
     }
 
     
