@@ -6,7 +6,8 @@ using UnityEngine;
 
 public class ProductResource : MonoBehaviour
 {
-    public ResourceData ResourceData; 
+    public float respawnTime;
+    public int capacity;
     private Stack<int> _availableIndices;  // Changed from Queue to Stack
     private List<Product> _spawnedObjects; 
     private Dictionary<int, Coroutine> _respawnCoroutines;
@@ -17,13 +18,18 @@ public class ProductResource : MonoBehaviour
         _objectPool = ObjectPool.Instance;
     }
 
+    private void Start()
+    {
+        InitializeResource();
+    }
+
     public void InitializeResource()
     {
         _availableIndices = new Stack<int>();  // Initialize as a Stack
         _spawnedObjects = new List<Product>();
         _respawnCoroutines = new Dictionary<int, Coroutine>();
 
-        for (int i = 0; i < ResourceData.capacity; i++)
+        for (int i = 0; i < capacity; i++)
         {
             SpawnObject(i);
             _availableIndices.Push(i);  // Use Push instead of Enqueue
@@ -32,11 +38,6 @@ public class ProductResource : MonoBehaviour
 
     private void SpawnObject(int index)
     {
-        if (ResourceData.productPrefab == null)
-        {
-            Debug.LogError("Prefab is not assigned in StandSO!");
-            return;
-        }
         // Obje oluştur ve listeye ekle
         Product product = _objectPool.productPool.Get();
         product.transform.position = SetProductSpawnPoint(index);
@@ -85,7 +86,7 @@ public class ProductResource : MonoBehaviour
     
     private IEnumerator RespawnItem(int index)
     {
-        yield return new WaitForSeconds(ResourceData.respawnTime);
+        yield return new WaitForSeconds(respawnTime);
 
         SpawnObject(index);
         _availableIndices.Push(index);  // Use Push to add the index back to the stack
