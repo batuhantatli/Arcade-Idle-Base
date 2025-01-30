@@ -12,6 +12,8 @@ public class CustomerManager : MonoBehaviour
 {
     private ObjectPool _objectPool;
     private ProductStandManager _productStandManager;
+    private CashRegisterManager _cashRegisterManager;
+    private CashRegister _selectedCashRegister;
     private int _currentActiveCustomerCount;
 
     [SerializeField] private Customer customerPrefab;
@@ -22,10 +24,10 @@ public class CustomerManager : MonoBehaviour
     
     public  Action<Customer> OnCustomerTaskDone;
     
-    public CashRegister selectedCashRegister;
     
     private void Awake()
     {
+        _cashRegisterManager = CashRegisterManager.Instance;
         _productStandManager = ProductStandManager.Instance;
         _objectPool = ObjectPool.Instance;
     }
@@ -48,7 +50,8 @@ public class CustomerManager : MonoBehaviour
     public void SpawnCustomer()
     {
         Customer customer = ObjectPool.Instance.customerPool.Get();
-        customer.Initialize(this  , selectedCashRegister , _productStandManager.GetEmptyProductStand() , customerSpawnPoint);
+        _selectedCashRegister = _cashRegisterManager.GetCashRegister();
+        customer.Initialize(this  , _selectedCashRegister , _productStandManager.GetEmptyProductStand() , customerSpawnPoint);
         
         _currentActiveCustomerCount++;
     }

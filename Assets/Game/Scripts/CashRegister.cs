@@ -67,4 +67,9 @@ public class CashRegister : MonoBehaviour
     {
         _customers.Add(customer);
     }
+
+    public int GetQueueCustomerCount()
+    {
+        return _customers.Count;
+    }
 }
