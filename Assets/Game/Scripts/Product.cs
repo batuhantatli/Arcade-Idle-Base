@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class Product : MonoBehaviour
 {
+    public int price;
     public void Jump(Transform parent,Vector3 movePoint , Action onComplete = null)
     {
         transform.SetParent(parent);

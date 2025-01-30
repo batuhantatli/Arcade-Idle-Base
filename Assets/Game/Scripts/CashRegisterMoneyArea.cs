@@ -5,30 +5,21 @@ using UnityEngine;
 
 public class CashRegisterMoneyArea : MonoBehaviour
 {
-    public struct GridCell
-    {
-        public int X;
-        public int Y;
-        public int Z;
-
-        public GridCell(int x, int y, int z)
-        {
-            X = x;
-            Y = y;
-            Z = z;
-        }
-
-    }
     private ObjectPool _objectPool;
-    private GridCell[,,] grid;
-    public List<MoneyPiece> moneyPieces = new List<MoneyPiece>();
-    public Transform moneySpawnPoint;
-    int width = 5;  // X ekseni boyutu
-    int height = 5; // Y ekseni boyutu
-    int depth = 5;  // Z ekseni boyutu
-    public float xSpaceLength;
-    public float ySpaceLength;
-    public float zSpaceLength;
+    private int _currentPrice;
+    private readonly List<MoneyPiece> _moneyPieces = new List<MoneyPiece>();
+    private int _currentX = 0; // Başlangıç X koordinatı
+    private int _currentY = 0; // Başlangıç Y koordinatı
+    private int _currentZ = 0; // Başlangıç Z koordinatı
+    
+    [Header("Money Spawn Settings")]
+    [SerializeField] private Transform moneySpawnPoint;
+    [SerializeField] private int countPerProduct;
+    [SerializeField] private int width = 5; 
+    [SerializeField] private int depth = 5; 
+    [SerializeField] private float xSpaceLength;
+    [SerializeField] private float ySpaceLength;
+    [SerializeField] private float zSpaceLength;
 
 
     private void Awake()
@@ -36,58 +27,55 @@ public class CashRegisterMoneyArea : MonoBehaviour
         _objectPool = ObjectPool.Instance;
     }
 
-    int currentX = 0; // Başlangıç X koordinatı
-    int currentY = 0; // Başlangıç Y koordinatı
-    int currentZ = 0; // Başlangıç Z koordinatı
-
-    public void SpawnMoney()
+    public void SpawnMoney(int price)
     {
-        for (int i = 0; i < 3; i++)
+        SetHoldPrice(price);
+        for (int i = 0; i < countPerProduct; i++)
         {
-            // Eğer grid dışına çıkıyorsa, yeni spawnları durdur
-            if (currentX >= width || currentZ >= depth)
-            {
-                Debug.LogWarning("Grid doldu, daha fazla nesne yerleştirilemez!");
-                break;
-            }
-
             var g = _objectPool.moneyPool.Get();
-            moneyPieces.Add(g);
+            _moneyPieces.Add(g);
             g.transform.SetParent(moneySpawnPoint);
 
-            Vector3 spawnPosition = new Vector3(currentX * xSpaceLength, currentY * ySpaceLength, currentZ * zSpaceLength);
+            Vector3 spawnPosition = new Vector3(_currentX * xSpaceLength, _currentY * ySpaceLength, _currentZ * zSpaceLength);
             g.transform.localPosition = spawnPosition;
 
+            _currentX++;
 
-            currentX++;
-
-            if (currentX >= width)
+            if (_currentX >= width)
             {
-                currentX = 0;
-                currentZ++;
+                _currentX = 0;
+                _currentZ++;
             }
 
-            if (currentZ >= depth)
+            if (_currentZ >= depth)
             {
-                currentZ = 0;
-                currentY++;
+                _currentZ = 0;
+                _currentY++;
             }
         }
     }
 
+    public void SetHoldPrice(int price)
+    {
+        _currentPrice += price;
+    }
+
     public void GiveMoney(Transform player , MoneyControlManager moneyControlManager)
     {
-        for (int i = 0; i < moneyPieces.Count; i++)
+        for (int i = 0; i < _moneyPieces.Count; i++)
         {
-            var money = moneyPieces[i];
+            var money = _moneyPieces[i];
             money.Move(player.transform,_objectPool);
-            moneyPieces.Remove(money);
-            moneyControlManager.ChangeMoney(money.increaseCount);
+            _moneyPieces.Remove(money);
         }
 
-        currentX = 0;
-        currentY = 0;
-        currentZ = 0;
+        moneyControlManager.ChangeMoney(_currentPrice);
+        
+        _currentPrice = 0;
+
+        _currentX = 0;
+        _currentY = 0;
+        _currentZ = 0;
     }
 
     

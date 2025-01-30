@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5861380362612987140}
   - component: {fileID: 6475449568717277733}
   - component: {fileID: 8524919789575911402}
+  - component: {fileID: 2368977758874204624}
   m_Layer: 0
   m_Name: 'CashRegister '
   m_TagString: Untagged
@@ -122,6 +123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   productPos: {fileID: 213525964482756146}
+  firsCustomer: {fileID: 0}
 --- !u!114 &8524919789575911402
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,11 +136,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b6237885e58d3b428f1ab478b86f68f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moneyPieces: []
   moneySpawnPoint: {fileID: 3018205945005412913}
+  countPerProduct: 0
+  width: 5
+  depth: 5
   xSpaceLength: 0.55
   ySpaceLength: 0.3
   zSpaceLength: 0.3
+--- !u!65 &2368977758874204624
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2411933616148986952}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.6771202, y: 1, z: 2.530794}
+  m_Center: {x: -2.4067903, y: 0, z: 0.7653972}
 --- !u!1 &3104907539629135304
 GameObject:
   m_ObjectHideFlags: 0

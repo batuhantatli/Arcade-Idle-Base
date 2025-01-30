@@ -19,7 +19,7 @@ public class ProductStand : MonoBehaviour
     private readonly List<CustomerTarget> _customerTargets = new List<CustomerTarget>();
 
     [SerializeField] private List<Transform> waitPoints = new List<Transform>();
-    [SerializeField] private int capacity;
+    [SerializeField] private int productCapacity;
 
     private void Start()
     {
@@ -57,7 +57,7 @@ public class ProductStand : MonoBehaviour
 
     public bool IsReadyForPush()
     {
-        return _stackedProducts.Count < capacity;
+        return _stackedProducts.Count < productCapacity;
     }
 
     public bool IsReadyForPop()

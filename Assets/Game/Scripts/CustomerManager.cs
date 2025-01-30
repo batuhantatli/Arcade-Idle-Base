@@ -12,7 +12,6 @@ public class CustomerManager : MonoBehaviour
 {
     private ObjectPool _objectPool;
     private ProductStandManager _productStandManager;
-    private MoneyControlManager _moneyControlManager;
     private int _currentActiveCustomerCount;
 
     [SerializeField] private Customer customerPrefab;
@@ -29,7 +28,6 @@ public class CustomerManager : MonoBehaviour
     {
         _productStandManager = ProductStandManager.Instance;
         _objectPool = ObjectPool.Instance;
-        _moneyControlManager = MoneyControlManager.Instance;
     }
 
     private void OnEnable()
