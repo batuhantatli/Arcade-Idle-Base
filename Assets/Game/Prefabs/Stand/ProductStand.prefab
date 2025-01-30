@@ -127,7 +127,7 @@ MonoBehaviour:
   - {fileID: 7788327995335677538}
   - {fileID: 8874820011835510414}
   - {fileID: 39264846599031317}
-  capacity: 3
+  productCapacity: 3
 --- !u!1 &2363287687289060170
 GameObject:
   m_ObjectHideFlags: 0
