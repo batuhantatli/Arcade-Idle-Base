@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -10,7 +11,6 @@ public class ProductResource : MonoBehaviour
     public int capacity;
     private Stack<int> _availableIndices;  // Changed from Queue to Stack
     private List<Product> _spawnedObjects; 
-    private Dictionary<int, Coroutine> _respawnCoroutines;
     private ObjectPool _objectPool;
 
     private void Awake()
@@ -25,14 +25,13 @@ public class ProductResource : MonoBehaviour
 
     public void InitializeResource()
     {
-        _availableIndices = new Stack<int>();  // Initialize as a Stack
+        _availableIndices = new Stack<int>(); 
         _spawnedObjects = new List<Product>();
-        _respawnCoroutines = new Dictionary<int, Coroutine>();
 
         for (int i = 0; i < capacity; i++)
         {
             SpawnObject(i);
-            _availableIndices.Push(i);  // Use Push instead of Enqueue
+            _availableIndices.Push(i); 
         }
     }
 
@@ -40,8 +39,8 @@ public class ProductResource : MonoBehaviour
     {
         // Obje oluştur ve listeye ekle
         Product product = _objectPool.productPool.Get();
-        product.transform.position = SetProductSpawnPoint(index);
-
+        product.SetInitializeTransform(SetProductSpawnPoint(index), SetProductRotation());
+        
         if (index < _spawnedObjects.Count)
         {
             _spawnedObjects[index] = product;
@@ -57,6 +56,11 @@ public class ProductResource : MonoBehaviour
         return transform.position + Vector3.right * (index+1);
     }
 
+    public Quaternion SetProductRotation()
+    {
+        return new Quaternion(0, 0, 0,0);
+    }
+
     [Button]
     public Product TakeItem()
     {
@@ -66,34 +70,27 @@ public class ProductResource : MonoBehaviour
             return null;
         }
 
-        int index = _availableIndices.Pop();  // Use Pop instead of Dequeue
+        int index = _availableIndices.Pop();  
 
         if (_spawnedObjects[index] != null)
         {
-            Product product = _spawnedObjects[index]; // Store the item before it's "destroyed"
+            Product product = _spawnedObjects[index]; 
             _spawnedObjects[index] = null;
 
-            // Respawn başlat
-            Coroutine respawnCoroutine = StartCoroutine(RespawnItem(index));
-            _respawnCoroutines[index] = respawnCoroutine;
+            _ = RespawnItem(index);
 
-            return product; // Return the item instead of destroying it
+            return product; 
         }
 
         return null;
     }
 
     
-    private IEnumerator RespawnItem(int index)
+    private async Task RespawnItem(int index)
     {
-        yield return new WaitForSeconds(respawnTime);
+        await Task.Delay((int)(respawnTime*1000)); // convert sec for design 
 
         SpawnObject(index);
-        _availableIndices.Push(index);  // Use Push to add the index back to the stack
-
-        if (_respawnCoroutines.ContainsKey(index))
-        {
-            _respawnCoroutines.Remove(index);
-        }
+        _availableIndices.Push(index);  
     }
 }
