@@ -36,6 +36,11 @@ public class Customer : MonoBehaviour
             stackedProduct = null;
         }
     }
+    
+    private void Start()
+    {
+        _navMeshAgent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
+    }
 
     public void Initialize(CustomerManager customerManager, CashRegister cashRegister,
         ProductStand.CustomerTarget customerTarget, Transform startPoint)
@@ -50,12 +55,6 @@ public class Customer : MonoBehaviour
         SetStandPoint(customerTarget);
     }
 
-    private void Start()
-    {
-        _navMeshAgent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
-    }
-
-
     public void SetStandPoint(ProductStand.CustomerTarget customerTarget)
     {
         _customerTarget = customerTarget;
@@ -66,7 +65,7 @@ public class Customer : MonoBehaviour
     public void MoveStand()
     {
         Debug.Log("Customer moving stand");
-        MovePosition(_customerTarget.moveTarget.position, (() => { StartCoroutine(ProductProcess()); }));
+        MovePosition(_customerTarget.moveTarget, (() => { StartCoroutine(ProductProcess()); }));
     }
 
     public IEnumerator ProductProcess()

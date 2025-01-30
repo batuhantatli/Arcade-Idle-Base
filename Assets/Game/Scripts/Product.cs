@@ -11,7 +11,7 @@ public class Product : MonoBehaviour
     {
         transform.SetParent(parent);
         transform.rotation = new Quaternion(0,0,0,0);
-        transform.DOLocalJump(movePoint, 1f, 1, .5f);
+        transform.DOLocalJump(movePoint, 2f,1 , .2f);
         onComplete?.Invoke();
     }
 
