@@ -20,6 +20,7 @@ public class ProductStand : MonoBehaviour
 
     [SerializeField] private List<Transform> waitPoints = new List<Transform>();
     [SerializeField] private int productCapacity;
+    public ProductType type;
 
     private void Start()
     {
@@ -50,11 +51,6 @@ public class ProductStand : MonoBehaviour
     {
         return new Vector3(0, 0, _stackedProducts.Count);
     }
-
-    public void MoveProductToPosition(Product product, Action onMoveComplete)
-    {
-    }
-
     public bool IsReadyForPush()
     {
         return _stackedProducts.Count < productCapacity;

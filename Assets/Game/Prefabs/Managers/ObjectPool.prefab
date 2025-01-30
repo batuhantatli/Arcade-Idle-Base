@@ -140,16 +140,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b7d9f6db58c2d549b38124713cc0134, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  productPools:
+  - productPool:
+      Tag: 
+      referenceComponent: {fileID: 8819280159373791227, guid: 8d094e10c4452cb4791c078e608b7555, type: 3}
+      poolSize: 100
+      container: {fileID: 11507064931965541}
+    type: 0
+    price: 10
+  - productPool:
+      Tag: 
+      referenceComponent: {fileID: 5191679504651560768, guid: 15de3cfdecc5b1a4a86ba5285db52a13, type: 3}
+      poolSize: 100
+      container: {fileID: 11507064931965541}
+    type: 1
+    price: 20
   customerPool:
     Tag: 
     referenceComponent: {fileID: -1884186539766897060, guid: 10aac88f6fa5d75449690d92ad1eb299, type: 3}
     poolSize: 50
     container: {fileID: 6988978431006919430}
-  productPool:
-    Tag: 
-    referenceComponent: {fileID: 8819280159373791227, guid: 8d094e10c4452cb4791c078e608b7555, type: 3}
-    poolSize: 200
-    container: {fileID: 11507064931965541}
   moneyPool:
     Tag: 
     referenceComponent: {fileID: 5454301724668806459, guid: af05430fbb5bd78409c32cf385ecfc3f, type: 3}

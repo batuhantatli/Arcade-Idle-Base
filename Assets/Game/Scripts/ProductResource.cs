@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class ProductResource : MonoBehaviour
 {
+    public ProductType type;
     public float respawnTime;
     public int capacity;
     private Stack<int> _availableIndices;  // Changed from Queue to Stack
@@ -37,8 +38,18 @@ public class ProductResource : MonoBehaviour
 
     private void SpawnObject(int index)
     {
-        // Obje oluştur ve listeye ekle
-        Product product = _objectPool.productPool.Get();
+        var productPool = _objectPool.GetProductPool(type);
+        
+        Product product = productPool.productPool.Get();
+        
+        ProductData data = new ProductData
+        {
+            Price = productPool.price,
+            Type = productPool.type
+        };
+        
+        product.SetProductData(data);
+        
         product.SetInitializeTransform(SetProductSpawnPoint(index), SetProductRotation());
         
         if (index < _spawnedObjects.Count)

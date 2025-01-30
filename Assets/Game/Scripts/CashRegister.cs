@@ -30,7 +30,7 @@ public class CashRegister : MonoBehaviour
 
         firsCustomer.MoveExit();
         
-        _moneyArea.SpawnMoney(firsCustomer.stackedProduct.price);
+        _moneyArea.SpawnMoney(firsCustomer.stackedProduct.data.Price);
 
         OnPaid();
     }

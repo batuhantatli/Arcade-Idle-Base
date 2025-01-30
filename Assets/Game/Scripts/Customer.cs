@@ -1,25 +1,22 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Serialization;
 
 public class Customer : MonoBehaviour
 {
     private NavMeshAgent _navMeshAgent;
     private CashRegister _cashRegister;
     private CustomerManager _customerManager;
-    
+
     private ProductStand.CustomerTarget _customerTarget;
     public Product stackedProduct;
     private Transform _startPoint;
 
     public bool isPaying;
-    
-    
+
+
     [SerializeField] private Transform productStackPoint;
 
     private void Awake()
@@ -36,7 +33,7 @@ public class Customer : MonoBehaviour
             stackedProduct = null;
         }
     }
-    
+
     private void Start()
     {
         _navMeshAgent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
@@ -122,7 +119,7 @@ public class Customer : MonoBehaviour
             if (HasReachedDestination())
             {
                 onComplateMove?.Invoke();
-                yield break; 
+                yield break;
             }
 
             yield return null;

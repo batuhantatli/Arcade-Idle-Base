@@ -1,13 +1,16 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 
 public class Product : MonoBehaviour
 {
-    public int price;
+    public ProductData data;
+    
+    public void SetProductData(ProductData _data)
+    {
+        data.Price = _data.Price;
+        data.Type = _data.Type;
+    }
     public void Jump(Transform parent,Vector3 movePoint , Action onComplete = null)
     {
         transform.SetParent(parent);

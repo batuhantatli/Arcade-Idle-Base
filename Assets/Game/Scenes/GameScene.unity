@@ -185,6 +185,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &560986171 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8052481883467873124, guid: c7f8af0b60811a34680f799edf9d62df, type: 3}
+  m_PrefabInstance: {fileID: 1150648227}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &570438470 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6475449568717277733, guid: d2a176a1a76c3d047865cb052d6af6e4, type: 3}
@@ -441,9 +446,25 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 779eba0d5ce1372459ba6aef12c1bad3, type: 2}
     - target: {fileID: 8928446092554683284, guid: c7f8af0b60811a34680f799edf9d62df, type: 3}
+      propertyPath: type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8928446092554683284, guid: c7f8af0b60811a34680f799edf9d62df, type: 3}
       propertyPath: productID
       value: Sphere
       objectReference: {fileID: 0}
+    - target: {fileID: 8928446092554683284, guid: c7f8af0b60811a34680f799edf9d62df, type: 3}
+      propertyPath: productPool.poolSize
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 8928446092554683284, guid: c7f8af0b60811a34680f799edf9d62df, type: 3}
+      propertyPath: productPool.container
+      value: 
+      objectReference: {fileID: 560986171}
+    - target: {fileID: 8928446092554683284, guid: c7f8af0b60811a34680f799edf9d62df, type: 3}
+      propertyPath: productPool.referenceComponent
+      value: 
+      objectReference: {fileID: 8819280159373791227, guid: 8d094e10c4452cb4791c078e608b7555, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -632,6 +653,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ProductStand (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4254835638362152782, guid: 2860406be111b8a4d904be6872e2c170, type: 3}
+      propertyPath: type
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5199683285886221636, guid: 2860406be111b8a4d904be6872e2c170, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4
@@ -681,11 +706,6 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 8127894269148047813, guid: db840ae77be8fd94e8317010f5a11b5a, type: 3}
   m_PrefabInstance: {fileID: 4749736290228763561}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &2135692556 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 11507064931965541, guid: 0b06e70a2eb4cda4ca4fa755cec2cdb8, type: 3}
-  m_PrefabInstance: {fileID: 6386088668927043506}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &45745929391336393
 PrefabInstance:
@@ -1454,106 +1474,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: ObjectPool
       objectReference: {fileID: 0}
-    - target: {fileID: 8200785820401555253, guid: 0b06e70a2eb4cda4ca4fa755cec2cdb8, type: 3}
-      propertyPath: g.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8200785820401555253, guid: 0b06e70a2eb4cda4ca4fa755cec2cdb8, type: 3}
-      propertyPath: PoolProducts.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8200785820401555253, guid: 0b06e70a2eb4cda4ca4fa755cec2cdb8, type: 3}
-      propertyPath: productPools.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8200785820401555253, guid: 0b06e70a2eb4cda4ca4fa755cec2cdb8, type: 3}
-      propertyPath: productPools.Array.data[0].id
-      value: 
-      objectReference: {fileID: 11400000, guid: 779eba0d5ce1372459ba6aef12c1bad3, type: 2}
-    - target: {fileID: 8200785820401555253, guid: 0b06e70a2eb4cda4ca4fa755cec2cdb8, type: 3}
-      propertyPath: productPools.Array.data[1].id
-      value: 
-      objectReference: {fileID: 11400000, guid: be1e4a872b0512f4d94e81699189845a, type: 2}
-    - target: {fileID: 8200785820401555253, guid: 0b06e70a2eb4cda4ca4fa755cec2cdb8, type: 3}
-      propertyPath: productPools.Array.data[0].poolSize
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 8200785820401555253, guid: 0b06e70a2eb4cda4ca4fa755cec2cdb8, type: 3}
-      propertyPath: productPools.Array.data[1].poolSize
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 8200785820401555253, guid: 0b06e70a2eb4cda4ca4fa755cec2cdb8, type: 3}
-      propertyPath: PoolProducts.Array.data[0].productID
-      value: Cube
-      objectReference: {fileID: 0}
-    - target: {fileID: 8200785820401555253, guid: 0b06e70a2eb4cda4ca4fa755cec2cdb8, type: 3}
-      propertyPath: PoolProducts.Array.data[1].productID
-      value: Sphere
-      objectReference: {fileID: 0}
-    - target: {fileID: 8200785820401555253, guid: 0b06e70a2eb4cda4ca4fa755cec2cdb8, type: 3}
-      propertyPath: productPools.Array.data[0].container
-      value: 
-      objectReference: {fileID: 2135692556}
-    - target: {fileID: 8200785820401555253, guid: 0b06e70a2eb4cda4ca4fa755cec2cdb8, type: 3}
-      propertyPath: productPools.Array.data[0].productSO
-      value: 
-      objectReference: {fileID: 11400000, guid: 779eba0d5ce1372459ba6aef12c1bad3, type: 2}
-    - target: {fileID: 8200785820401555253, guid: 0b06e70a2eb4cda4ca4fa755cec2cdb8, type: 3}
-      propertyPath: productPools.Array.data[1].container
-      value: 
-      objectReference: {fileID: 2135692556}
-    - target: {fileID: 8200785820401555253, guid: 0b06e70a2eb4cda4ca4fa755cec2cdb8, type: 3}
-      propertyPath: productPools.Array.data[1].productSO
-      value: 
-      objectReference: {fileID: 11400000, guid: be1e4a872b0512f4d94e81699189845a, type: 2}
-    - target: {fileID: 8200785820401555253, guid: 0b06e70a2eb4cda4ca4fa755cec2cdb8, type: 3}
-      propertyPath: productPools.Array.data[0].product.poolSize
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 8200785820401555253, guid: 0b06e70a2eb4cda4ca4fa755cec2cdb8, type: 3}
-      propertyPath: productPools.Array.data[1].product.poolSize
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 8200785820401555253, guid: 0b06e70a2eb4cda4ca4fa755cec2cdb8, type: 3}
-      propertyPath: productPools.Array.data[0].product.container
-      value: 
-      objectReference: {fileID: 2135692556}
-    - target: {fileID: 8200785820401555253, guid: 0b06e70a2eb4cda4ca4fa755cec2cdb8, type: 3}
-      propertyPath: productPools.Array.data[1].product.container
-      value: 
-      objectReference: {fileID: 2135692556}
-    - target: {fileID: 8200785820401555253, guid: 0b06e70a2eb4cda4ca4fa755cec2cdb8, type: 3}
-      propertyPath: productPools.Array.data[0].referenceComponent
-      value: 
-      objectReference: {fileID: 8819280159373791227, guid: 8d094e10c4452cb4791c078e608b7555, type: 3}
-    - target: {fileID: 8200785820401555253, guid: 0b06e70a2eb4cda4ca4fa755cec2cdb8, type: 3}
-      propertyPath: productPools.Array.data[1].referenceComponent
-      value: 
-      objectReference: {fileID: 5191679504651560768, guid: 15de3cfdecc5b1a4a86ba5285db52a13, type: 3}
-    - target: {fileID: 8200785820401555253, guid: 0b06e70a2eb4cda4ca4fa755cec2cdb8, type: 3}
-      propertyPath: PoolProducts.Array.data[0].productPool.container
-      value: 
-      objectReference: {fileID: 2135692556}
-    - target: {fileID: 8200785820401555253, guid: 0b06e70a2eb4cda4ca4fa755cec2cdb8, type: 3}
-      propertyPath: PoolProducts.Array.data[1].productPool.container
-      value: 
-      objectReference: {fileID: 2135692556}
-    - target: {fileID: 8200785820401555253, guid: 0b06e70a2eb4cda4ca4fa755cec2cdb8, type: 3}
-      propertyPath: productPools.Array.data[0].product.referenceComponent
-      value: 
-      objectReference: {fileID: 8819280159373791227, guid: 8d094e10c4452cb4791c078e608b7555, type: 3}
-    - target: {fileID: 8200785820401555253, guid: 0b06e70a2eb4cda4ca4fa755cec2cdb8, type: 3}
-      propertyPath: productPools.Array.data[1].product.referenceComponent
-      value: 
-      objectReference: {fileID: 5191679504651560768, guid: 15de3cfdecc5b1a4a86ba5285db52a13, type: 3}
-    - target: {fileID: 8200785820401555253, guid: 0b06e70a2eb4cda4ca4fa755cec2cdb8, type: 3}
-      propertyPath: PoolProducts.Array.data[0].productPool.referenceComponent
-      value: 
-      objectReference: {fileID: 8819280159373791227, guid: 8d094e10c4452cb4791c078e608b7555, type: 3}
-    - target: {fileID: 8200785820401555253, guid: 0b06e70a2eb4cda4ca4fa755cec2cdb8, type: 3}
-      propertyPath: PoolProducts.Array.data[1].productPool.referenceComponent
-      value: 
-      objectReference: {fileID: 5191679504651560768, guid: 15de3cfdecc5b1a4a86ba5285db52a13, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1706,5 +1626,5 @@ SceneRoots:
   - {fileID: 5453033572408690249}
   - {fileID: 1150648227}
   - {fileID: 5731939397120040952}
-  - {fileID: 3338169979093724596}
   - {fileID: 2016285976}
+  - {fileID: 3338169979093724596}

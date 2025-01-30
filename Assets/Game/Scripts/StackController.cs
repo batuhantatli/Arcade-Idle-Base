@@ -1,26 +1,27 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class StackController : MonoBehaviour
 {
     public int stackLimitCount;
     public Transform stackPoint;
-    private Stack<Product> _stackedProducts = new Stack<Product>();
+    private List<Product> _stackedProducts = new List<Product>();
 
     private Coroutine _stackCoroutine;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out ProductResource productResource) && IsReadyForPush())
+        if (other.TryGetComponent(out ProductResource productResource) && IsReadyForAdd())
         {
             _stackCoroutine = StartCoroutine(CollectProduct(productResource));
         }
 
         if (other.TryGetComponent(out ProductStand stand))
         {
-            if (stand.IsReadyForPush() && IsReadyForPop())
+            if (stand.IsReadyForPush() && IsReadyForRemove(stand.type))
             {
                 _stackCoroutine = StartCoroutine(DropProduct(stand));
             }
@@ -54,7 +55,7 @@ public class StackController : MonoBehaviour
             {
                 product.Jump(stackPoint, GetProductMovePoint(), () =>
                 {
-                    PushProduct(product);
+                    AddProduct(product);
                 });
             }
 
@@ -66,42 +67,44 @@ public class StackController : MonoBehaviour
     {
         while (true)
         {
-            if (stand.IsReadyForPush() && IsReadyForPop())
+            if (stand.IsReadyForPush() && IsReadyForRemove(stand.type))
             {
-                stand.PushToStack(PopProduct());
+                stand.PushToStack(RemoveProduct(stand.type));
             }
 
             yield return new WaitForSeconds(.1f);
         }
     }
 
-    public void PushProduct(Product product)
+    public void AddProduct(Product product)
     {
-        _stackedProducts.Push(product);
-        if (!IsReadyForPush() && _stackCoroutine!= null )
+        _stackedProducts.Add(product);
+        if (!IsReadyForAdd() && _stackCoroutine!= null )
         {
             StopCoroutine(_stackCoroutine);
             _stackCoroutine = null;
         }
     }
 
-    public Product PopProduct()
+    public Product RemoveProduct(ProductType type)
     {
-        if (_stackedProducts.Count > 0)
+        if (IsReadyForRemove(type))
         {
-            return _stackedProducts.Pop();
+            Product product = _stackedProducts.FirstOrDefault(t => t.data.Type == type);
+            _stackedProducts.Remove(product);
+            return product;
         }
 
         Debug.LogWarning("Stack is empty. Cannot remove any product.");
         return null;
     }
 
-    public bool IsReadyForPush()
+    public bool IsReadyForAdd()
     {
         return _stackedProducts.Count < stackLimitCount;
     }    
-    public bool IsReadyForPop()
+    public bool IsReadyForRemove(ProductType type)
     {
-        return _stackedProducts.Count > 0;
+        return _stackedProducts.Count(t =>t.data.Type == type) > 0;
     }    
 }

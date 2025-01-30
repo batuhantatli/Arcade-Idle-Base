@@ -21,10 +21,10 @@ public class CustomerManager : MonoBehaviour
     [SerializeField] private float customerWaitRateForFull;
     [SerializeField] private float customerSpawnRate;
     [SerializeField] private int maxCustomerCount;
-    
-    public  Action<Customer> OnCustomerTaskDone;
-    
-    
+
+    public Action<Customer> OnCustomerTaskDone;
+
+
     private void Awake()
     {
         _cashRegisterManager = CashRegisterManager.Instance;
@@ -49,10 +49,11 @@ public class CustomerManager : MonoBehaviour
 
     public void SpawnCustomer()
     {
-        Customer customer = ObjectPool.Instance.customerPool.Get();
+        Customer customer = _objectPool.customerPool.Get();
         _selectedCashRegister = _cashRegisterManager.GetCashRegister();
-        customer.Initialize(this  , _selectedCashRegister , _productStandManager.GetEmptyProductStand() , customerSpawnPoint);
-        
+        customer.Initialize(this, _selectedCashRegister, _productStandManager.GetEmptyProductStand(),
+            customerSpawnPoint);
+
         _currentActiveCustomerCount++;
     }
 
@@ -60,14 +61,13 @@ public class CustomerManager : MonoBehaviour
     {
         while (true)
         {
-            if ( CustomerSpawnController())
+            if (CustomerSpawnController())
             {
                 SpawnCustomer();
                 yield return new WaitForSeconds(customerSpawnRate);
             }
 
             yield return new WaitForSeconds(customerWaitRateForFull);
-
         }
     }
 
@@ -75,14 +75,13 @@ public class CustomerManager : MonoBehaviour
     {
         return _productStandManager.EmptyProductStandCount() > 0 && maxCustomerCount > _currentActiveCustomerCount;
     }
-    
+
 
     public void CustomerExit(Customer customer)
     {
         _currentActiveCustomerCount--;
-        _objectPool.productPool.Relase(customer.stackedProduct.gameObject);
+        _objectPool.GetProductPool(customer.stackedProduct.data.Type).productPool
+            .Relase(customer.stackedProduct.gameObject);
         _objectPool.customerPool.Relase(customer.gameObject);
     }
-
-    
 }
