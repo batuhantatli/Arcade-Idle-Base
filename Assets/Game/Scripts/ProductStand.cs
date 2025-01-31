@@ -49,7 +49,7 @@ public class ProductStand : MonoBehaviour
 
     public Vector3 CalculateProductPosition()
     {
-        return new Vector3(0, 0, _stackedProducts.Count);
+        return new Vector3(0, 0, _stackedProducts.Count+1);
     }
     public bool IsReadyForPush()
     {
@@ -59,6 +59,11 @@ public class ProductStand : MonoBehaviour
     public bool IsReadyForPop()
     {
         return _stackedProducts.Count > 0;
+    }
+
+    public int GetProductCount()
+    {
+        return _stackedProducts.Count;
     }
 
 
@@ -75,7 +80,7 @@ public class ProductStand : MonoBehaviour
         }
     }
 
-    public CustomerTarget GetRandomEmptyPoint()
+    public CustomerTarget GetEmptyPoint()
     {
         var customerWaitPoint = _customerTargets.FirstOrDefault(t => t.isEmpty);
         if (customerWaitPoint != null)

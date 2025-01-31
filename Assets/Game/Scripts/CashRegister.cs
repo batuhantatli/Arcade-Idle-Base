@@ -23,7 +23,7 @@ public class CashRegister : MonoBehaviour
         if (_customers.Count == 0) return;
 
         Debug.Log("Customer paying");
-        _firstCustomer = _customers.Dequeue();
+        _firstCustomer = _customers.Peek();
 
         await _firstCustomer.stackedProduct.transform.DOJump(productPos.position, 1f, 1, 1f).SetLoops(2, LoopType.Yoyo)
             .AsyncWaitForCompletion();
@@ -31,7 +31,7 @@ public class CashRegister : MonoBehaviour
         Debug.Log("Customer paid product");
 
         _firstCustomer.MoveExit();
-
+        _customers.Dequeue();
         _moneyArea.SpawnMoney(_firstCustomer.stackedProduct.data.Price);
 
         SoldProduct();

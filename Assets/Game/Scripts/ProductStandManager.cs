@@ -10,8 +10,8 @@ public class ProductStandManager : Singleton<ProductStandManager>
 
     public ProductStand.CustomerTarget GetEmptyProductStand()
     {
-        var productStands = standList.OrderByDescending(t => t.GetEmptyWaitCount()).ToList();
-        return productStands.First().GetRandomEmptyPoint();
+        var productStands = standList.Where(t => t.GetEmptyWaitCount() > 0 ).OrderByDescending(t=>t.GetProductCount());
+        return productStands.First().GetEmptyPoint();
     }
 
     public int EmptyProductStandCount()

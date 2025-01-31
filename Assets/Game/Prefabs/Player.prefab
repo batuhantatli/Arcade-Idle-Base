@@ -43,8 +43,8 @@ GameObject:
   - component: {fileID: 5395220770133766193}
   - component: {fileID: 3340801061541851628}
   - component: {fileID: 5620079033783015916}
-  - component: {fileID: 1986889503508101046}
   - component: {fileID: 4722744276098265473}
+  - component: {fileID: 1986889503508101046}
   - component: {fileID: 1156556844444884770}
   - component: {fileID: 7406024815809012135}
   m_Layer: 0
@@ -143,30 +143,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1986889503508101046
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7178450331366955455}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c4739c7a151f8c4fa790f7f24829379, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  joystick: {fileID: 0}
-  accelerationTime: 1
-  rotationAccelerationTime: 0.1
-  maxSpeed: 3.5
-  maxRotationSpeed: 2000
-  cameraTransform: {fileID: 0}
-  speedExponent: 1
-  rigidBody: {fileID: 0}
-  currentSpeed: 1
-  slowDownRate: 20
-  inputEnabled: 1
-  moveRotationXAngle: 20
 --- !u!54 &4722744276098265473
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -194,6 +170,30 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 1
+--- !u!114 &1986889503508101046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7178450331366955455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c4739c7a151f8c4fa790f7f24829379, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  joystick: {fileID: 0}
+  accelerationTime: 0.1
+  rotationAccelerationTime: 0.1
+  maxSpeed: 4.5
+  maxRotationSpeed: 2000
+  cameraTransform: {fileID: 0}
+  speedExponent: 1
+  rigidBody: {fileID: 0}
+  currentSpeed: 1
+  slowDownRate: 20
+  inputEnabled: 1
+  moveRotationXAngle: 20
 --- !u!114 &1156556844444884770
 MonoBehaviour:
   m_ObjectHideFlags: 0

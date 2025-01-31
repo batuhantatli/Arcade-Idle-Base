@@ -70,7 +70,7 @@ public class ProductResource : MonoBehaviour
 
     public Quaternion SetProductRotation()
     {
-        return quaternion.identity;
+        return Quaternion.identity;
     }
 
     [Button]

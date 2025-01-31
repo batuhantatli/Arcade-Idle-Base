@@ -50,13 +50,16 @@ public class StackController : MonoBehaviour
     {
         while (true)
         {
-            var product = productResource.RequestProduct();
-            if (product != null)
+            if (IsReadyForAdd())
             {
-                product.Jump(stackPoint, GetProductMovePoint(), () =>
+                var product = productResource.RequestProduct();
+                if (product != null)
                 {
-                    AddProduct(product);
-                });
+                    product.Jump(stackPoint, GetProductMovePoint(), () =>
+                    {
+                        AddProduct(product);
+                    });
+                }
             }
 
             yield return new WaitForSeconds(.1f);
@@ -90,7 +93,7 @@ public class StackController : MonoBehaviour
     {
         if (IsReadyForRemove(type))
         {
-            Product product = _stackedProducts.FirstOrDefault(t => t.data.Type == type);
+            Product product = _stackedProducts.LastOrDefault(t => t.data.Type == type);
             _stackedProducts.Remove(product);
             return product;
         }
