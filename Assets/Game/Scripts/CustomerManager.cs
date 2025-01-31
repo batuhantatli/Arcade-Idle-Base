@@ -1,12 +1,6 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using JetBrains.Annotations;
-using Sirenix.OdinInspector;
-using UnityEditor.VersionControl;
 using UnityEngine;
-using UnityEngine.Serialization;
-using Task = System.Threading.Tasks.Task;
 
 public class CustomerManager : MonoBehaviour
 {
@@ -15,6 +9,8 @@ public class CustomerManager : MonoBehaviour
     private CashRegisterManager _cashRegisterManager;
     private CashRegister _selectedCashRegister;
     private int _currentActiveCustomerCount;
+    private WaitForSeconds _customerSpawnWait;
+    private WaitForSeconds _customerFullWait;
 
     [SerializeField] private Customer customerPrefab;
     [SerializeField] private Transform customerSpawnPoint;
@@ -45,6 +41,8 @@ public class CustomerManager : MonoBehaviour
     private void Start()
     {
         StartCoroutine(SpawnCustomerLoop());
+        _customerSpawnWait = new WaitForSeconds(customerSpawnRate);
+        _customerFullWait = new WaitForSeconds(customerWaitRateForFull);
     }
 
     public void SpawnCustomer()
@@ -64,10 +62,10 @@ public class CustomerManager : MonoBehaviour
             if (CustomerSpawnController())
             {
                 SpawnCustomer();
-                yield return new WaitForSeconds(customerSpawnRate);
+                yield return _customerSpawnWait;
             }
 
-            yield return new WaitForSeconds(customerWaitRateForFull);
+            yield return _customerFullWait;
         }
     }
 

@@ -118,5 +118,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e98525bd1c1b0240b89e92b23344cba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
   respawnTime: 1
   capacity: 5

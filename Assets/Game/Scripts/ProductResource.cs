@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Sirenix.OdinInspector;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class ProductResource : MonoBehaviour
@@ -69,11 +70,11 @@ public class ProductResource : MonoBehaviour
 
     public Quaternion SetProductRotation()
     {
-        return new Quaternion(0, 0, 0,0);
+        return quaternion.identity;
     }
 
     [Button]
-    public Product TakeItem()
+    public Product RequestProduct()
     {
         if (_availableIndices.Count == 0)
         {

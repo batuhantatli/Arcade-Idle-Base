@@ -137,7 +137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moneySpawnPoint: {fileID: 3018205945005412913}
-  countPerProduct: 0
+  countPerProduct: 3
   width: 5
   depth: 5
   xSpaceLength: 0.55

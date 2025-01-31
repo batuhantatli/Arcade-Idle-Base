@@ -6,19 +6,19 @@ using UnityEngine.AI;
 
 public class Customer : MonoBehaviour
 {
+    private const float WaitRefreshRate = .2f;
+
     private NavMeshAgent _navMeshAgent;
     private CashRegister _cashRegister;
     private CustomerManager _customerManager;
-
     private ProductStand.CustomerTarget _customerTarget;
-    public Product stackedProduct;
     private Transform _startPoint;
-
-    public bool isPaying;
-
-
+    private WaitForSeconds _productWaitRefreshRate;
     [SerializeField] private Transform productStackPoint;
 
+    public Product stackedProduct;
+    public bool isPaying;
+    
     private void Awake()
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
@@ -36,6 +36,8 @@ public class Customer : MonoBehaviour
 
     private void Start()
     {
+        _productWaitRefreshRate = new WaitForSeconds(WaitRefreshRate);
+
         _navMeshAgent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
     }
 
@@ -52,43 +54,45 @@ public class Customer : MonoBehaviour
         SetStandPoint(customerTarget);
     }
 
-    public void SetStandPoint(ProductStand.CustomerTarget customerTarget)
-    {
-        _customerTarget = customerTarget;
-        _customerTarget.isEmpty = false;
-        MoveStand();
-    }
 
-    public void MoveStand()
+    private void MoveStand()
     {
         Debug.Log("Customer moving stand");
-        MovePosition(_customerTarget.moveTarget, (() => { StartCoroutine(ProductProcess()); }));
+        MovePosition(_customerTarget.moveTarget, (OnProductProcess));
     }
 
-    public IEnumerator ProductProcess()
+    private void OnProductProcess()
     {
-        while (true)
+        if (_customerTarget.selectedStand.IsReadyForPop())
         {
-            if (_customerTarget.selectedStand.IsReadyForPop())
+            Product product = _customerTarget.selectedStand.TakeItem();
+            Debug.Log("Customer taking product");
+            product.Jump(productStackPoint, Vector3.zero, (() =>
             {
-                Product product = _customerTarget.selectedStand.TakeItem();
-                Debug.Log("Customer taking product");
-                product.Jump(productStackPoint, Vector3.zero, ((() =>
-                {
-                    _customerTarget.isEmpty = true;
-                    MoveCashRegister();
-                })));
-                stackedProduct = product;
-
-                yield break;
-            }
-
+                _customerTarget.isEmpty = true;
+                MoveCashRegister();
+            }));
+            stackedProduct = product;
+        }
+        else
+        {
             Debug.Log("Customer waiting product");
-            yield return new WaitForSeconds(.2f);
+            StartCoroutine(WaitForProduct());
         }
     }
 
-    public void MoveCashRegister()
+    private IEnumerator WaitForProduct()
+    {
+        while (!_customerTarget.selectedStand.IsReadyForPop())
+        {
+            Debug.Log("Waiting for product...");
+            yield return _productWaitRefreshRate;
+        }
+
+        OnProductProcess(); 
+    }
+
+    private void MoveCashRegister()
     {
         Debug.Log("Customer moving cash register");
         _cashRegister.NewCustomer(this);
@@ -112,6 +116,14 @@ public class Customer : MonoBehaviour
         StartCoroutine(CheckIfReachedDestination((() => { onCompleteMove?.Invoke(); })));
     }
 
+
+    private void SetStandPoint(ProductStand.CustomerTarget customerTarget)
+    {
+        _customerTarget = customerTarget;
+        _customerTarget.isEmpty = false;
+        MoveStand();
+    }
+
     private IEnumerator CheckIfReachedDestination(Action onComplateMove)
     {
         while (true)
@@ -126,7 +138,7 @@ public class Customer : MonoBehaviour
         }
     }
 
-    public bool HasReachedDestination()
+    private bool HasReachedDestination()
     {
         if (!_navMeshAgent.pathPending && _navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance)
         {

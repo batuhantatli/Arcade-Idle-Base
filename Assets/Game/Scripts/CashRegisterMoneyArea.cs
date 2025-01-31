@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,12 +9,13 @@ public class CashRegisterMoneyArea : MonoBehaviour
     private int _currentX = 0; // Başlangıç X koordinatı
     private int _currentY = 0; // Başlangıç Y koordinatı
     private int _currentZ = 0; // Başlangıç Z koordinatı
-    
-    [Header("Money Spawn Settings")]
-    [SerializeField] private Transform moneySpawnPoint;
+
+    [Header("Money Spawn Settings")] [SerializeField]
+    private Transform moneySpawnPoint;
+
     [SerializeField] private int countPerProduct;
-    [SerializeField] private int width = 5; 
-    [SerializeField] private int depth = 5; 
+    [SerializeField] private int width = 5;
+    [SerializeField] private int depth = 5;
     [SerializeField] private float xSpaceLength;
     [SerializeField] private float ySpaceLength;
     [SerializeField] private float zSpaceLength;
@@ -26,6 +25,8 @@ public class CashRegisterMoneyArea : MonoBehaviour
     {
         _objectPool = ObjectPool.Instance;
     }
+    
+
 
     public void SpawnMoney(int price)
     {
@@ -36,7 +37,8 @@ public class CashRegisterMoneyArea : MonoBehaviour
             _moneyPieces.Add(g);
             g.transform.SetParent(moneySpawnPoint);
 
-            Vector3 spawnPosition = new Vector3(_currentX * xSpaceLength, _currentY * ySpaceLength, _currentZ * zSpaceLength);
+            Vector3 spawnPosition =
+                new Vector3(_currentX * xSpaceLength, _currentY * ySpaceLength, _currentZ * zSpaceLength);
             g.transform.localPosition = spawnPosition;
 
             _currentX++;
@@ -55,22 +57,17 @@ public class CashRegisterMoneyArea : MonoBehaviour
         }
     }
 
-    public void SetHoldPrice(int price)
-    {
-        _currentPrice += price;
-    }
-
-    public void GiveMoney(Transform player , MoneyControlManager moneyControlManager)
+    public void GiveMoney(Transform player, MoneyControlManager moneyControlManager)
     {
         for (int i = 0; i < _moneyPieces.Count; i++)
         {
             var money = _moneyPieces[i];
-            money.Move(player.transform,_objectPool);
+            money.Move(player.transform, _objectPool);
             _moneyPieces.Remove(money);
         }
 
         moneyControlManager.ChangeMoney(_currentPrice);
-        
+
         _currentPrice = 0;
 
         _currentX = 0;
@@ -78,6 +75,9 @@ public class CashRegisterMoneyArea : MonoBehaviour
         _currentZ = 0;
     }
 
-    
-    
+
+    private void SetHoldPrice(int price)
+    {
+        _currentPrice += price;
+    }
 }

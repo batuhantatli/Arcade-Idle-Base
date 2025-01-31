@@ -1,16 +1,17 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class CashRegisterManager : Singleton<CashRegisterManager>
 {
-    public List<CashRegister> cashRegisterList = new List<CashRegister>();
+    [SerializeField] private List<CashRegister> cashRegisterList = new List<CashRegister>();
 
+    #region Public Methods
     public CashRegister GetCashRegister()
     {
-        var productStands = cashRegisterList.OrderByDescending(t => t.GetQueueCustomerCount()).ToList();
-        return productStands.First();
+        return cashRegisterList.OrderBy(t => t.GetQueueCustomerCount()).First();
     }
+    #endregion
+
+ 
 }

@@ -50,7 +50,7 @@ public class StackController : MonoBehaviour
     {
         while (true)
         {
-            var product = productResource.TakeItem();
+            var product = productResource.RequestProduct();
             if (product != null)
             {
                 product.Jump(stackPoint, GetProductMovePoint(), () =>
